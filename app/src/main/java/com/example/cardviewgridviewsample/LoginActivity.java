@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginBtn.setOnClickListener(this);
         createAccountLayout.setOnClickListener(this);
 
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
         //
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -79,8 +79,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     editor.putString("uname", username);
-
-
                     for (DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
                         Users user = dataSnapshot2.getValue(Users.class);
                         String mPassw = user.getUser_password();

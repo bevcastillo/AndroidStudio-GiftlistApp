@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ViewPersonActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/giftlist_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorRed"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/backbutton_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/person_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:text="Person name"
+                android:textColor="@color/colorWhite"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:paddingLeft="10dp"/>
+
+            <ImageView
+                android:id="@+id/edit_person"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_edit_user"
+                android:layout_gravity="center"
+                android:tint="@color/colorWhite"/>
+
+            <ImageView
+                android:id="@+id/add_gift"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_gift"
+                android:layout_gravity="center"
+                android:tint="@color/colorWhite"/>
+
+
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:progressDrawable="@drawable/progressbar_circle"
+            android:progress="80"
+            android:indeterminateTint="@color/colorRed"
+            android:indeterminate="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/layout_noitem_found1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_santa_claus"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No gifts found"
+                android:layout_marginTop="10dp"/>
+
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gifts_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"/>
+
+    </FrameLayout>
+
+</LinearLayout>

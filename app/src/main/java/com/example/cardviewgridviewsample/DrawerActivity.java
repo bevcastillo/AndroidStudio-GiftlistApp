@@ -96,7 +96,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         switch (id){
             case R.id.nav_giftlist:
                 cashfragment = new GiftlistFragment();
-//                cashfragment = new CashierAllPurchaseFragment();
                 break;
             case R.id.nav_settings:
                 Intent intent = new Intent(DrawerActivity.this, SettingsActivity.class);

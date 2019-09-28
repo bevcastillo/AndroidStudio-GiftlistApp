@@ -34,6 +34,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-database:16.0.6'
     implementation 'com.firebase:firebase-client-android:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
 
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
     implementation 'android.arch.navigation:navigation-ui:1.0.0'

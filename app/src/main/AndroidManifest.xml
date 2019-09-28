@@ -9,7 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".ViewPersonActivity"></activity>
+        <activity android:name=".AddGiftsActivity" />
+        <activity
+            android:name=".tabs.AddPersonActivity"
+            android:label="Add a Person" />
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"

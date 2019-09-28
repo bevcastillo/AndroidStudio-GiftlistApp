@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
         //
         createAccountLayout = (LinearLayout) findViewById(R.id.regLoginLayout);
