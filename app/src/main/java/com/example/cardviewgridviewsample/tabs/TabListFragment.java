@@ -109,6 +109,7 @@ public class TabListFragment extends Fragment {
                                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
+
                                 progressBar.setVisibility(View.GONE);
 
                                 if (list.isEmpty()){

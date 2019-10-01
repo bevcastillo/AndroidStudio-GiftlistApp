@@ -2,6 +2,7 @@ package com.example.cardviewgridviewsample.objects;
 
 public class Users {
     String user_name, user_username, user_password;
+    double user_budget;
 
     public Users() {
     }
@@ -34,5 +35,13 @@ public class Users {
 
     public void setUser_password(String user_password) {
         this.user_password = user_password;
+    }
+
+    public double getUser_budget() {
+        return user_budget;
+    }
+
+    public void setUser_budget(double user_budget) {
+        this.user_budget = user_budget;
     }
 }

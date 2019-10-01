@@ -76,6 +76,7 @@ public class AddGiftsActivity extends AppCompatActivity implements View.OnClickL
     private void addGift(final String gift_name, String gift_where_to_buy, String gift_note, double gift_price) {
         final Gift gift = new Gift(gift_name, gift_where_to_buy, gift_note, gift_price);
 
+
         SharedPreferences userPreference = getSharedPreferences("UserPref", MODE_PRIVATE);
         final String username = (userPreference.getString("uname",""));
 
@@ -105,6 +106,7 @@ public class AddGiftsActivity extends AppCompatActivity implements View.OnClickL
 
                                                 databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift")
                                                         .child(GiftId).setValue(gift);
+                                                databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/gift_count").setValue(gift);
                                             }
                                         }
                                     }

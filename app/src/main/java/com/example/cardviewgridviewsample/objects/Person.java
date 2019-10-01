@@ -3,6 +3,7 @@ package com.example.cardviewgridviewsample.objects;
 public class Person {
     String person_name, person_image;
     double person_budget;
+    int person_total_qty;
 
     public Person() {
     }
@@ -34,5 +35,13 @@ public class Person {
 
     public void setPerson_budget(double person_budget) {
         this.person_budget = person_budget;
+    }
+
+    public int getPerson_total_qty() {
+        return person_total_qty;
+    }
+
+    public void setPerson_total_qty(int person_total_qty) {
+        this.person_total_qty = person_total_qty;
     }
 }

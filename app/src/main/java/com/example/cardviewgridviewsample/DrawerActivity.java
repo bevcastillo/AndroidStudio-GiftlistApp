@@ -1,6 +1,9 @@
 package com.example.cardviewgridviewsample;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,11 +12,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.navigation.ui.AppBarConfiguration;
 
@@ -102,7 +107,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 startActivity(intent);
                 break;
             case R.id.nav_logout:
-//                logoutDialog();
+                logoutDialog();
                 break;
         }
 
@@ -114,6 +119,36 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void logoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to logout?");
+        builder.setPositiveButton("LEAVE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences userPreference = getApplicationContext().getSharedPreferences("UserPref", MODE_PRIVATE);
+                SharedPreferences personNamePref = getSharedPreferences("personPref", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = userPreference.edit();
+                SharedPreferences.Editor editor1 = personNamePref.edit();
+
+                editor.clear().commit();
+                editor1.clear().commit();
+
+                Intent intent = new Intent(DrawerActivity.this, LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(DrawerActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
