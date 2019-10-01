@@ -1,7 +1,7 @@
 package com.example.cardviewgridviewsample.objects;
 
 public class Gift {
-    String gift_name, gift_picture, gift_where_to_buy, gift_note;
+    String gift_name, gift_picture, gift_where_to_buy, gift_note, gift_wrap_status, gift_bought_status;
     double gift_price;
 
     public Gift() {
@@ -52,5 +52,21 @@ public class Gift {
 
     public void setGift_price(double gift_price) {
         this.gift_price = gift_price;
+    }
+
+    public String getGift_wrap_status() {
+        return gift_wrap_status;
+    }
+
+    public void setGift_wrap_status(String gift_wrap_status) {
+        this.gift_wrap_status = gift_wrap_status;
+    }
+
+    public String getGift_bought_status() {
+        return gift_bought_status;
+    }
+
+    public void setGift_bought_status(String gift_bought_status) {
+        this.gift_bought_status = gift_bought_status;
     }
 }

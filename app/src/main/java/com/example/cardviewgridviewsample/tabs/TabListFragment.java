@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +44,7 @@ public class TabListFragment extends Fragment {
     List<Personlistdata> list;
     LinearLayout noItemLayout;
     ProgressBar progressBar;
+    SwipeRefreshLayout pullToRefresh;
 
 
     public TabListFragment() {
@@ -60,7 +62,17 @@ public class TabListFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.personlist_recyclerview);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         noItemLayout = (LinearLayout) view.findViewById(R.id.layout_noitem_found);
+        pullToRefresh = (SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
 
+        //listeners
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pullToRefresh.setRefreshing(false);
+                displayAllPersonlist();
+
+            }
+        });
 
         //
         firebaseDatabase = FirebaseDatabase.getInstance();

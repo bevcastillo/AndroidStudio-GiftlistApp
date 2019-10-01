@@ -3,6 +3,7 @@ package com.example.cardviewgridviewsample.objects;
 public class Users {
     String user_name, user_username, user_password;
     double user_budget;
+    int user_gift_qty;
 
     public Users() {
     }
@@ -43,5 +44,13 @@ public class Users {
 
     public void setUser_budget(double user_budget) {
         this.user_budget = user_budget;
+    }
+
+    public int getUser_gift_qty() {
+        return user_gift_qty;
+    }
+
+    public void setUser_gift_qty(int user_gift_qty) {
+        this.user_gift_qty = user_gift_qty;
     }
 }

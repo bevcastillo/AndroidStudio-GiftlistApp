@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.cardviewgridviewsample.fragments.GiftlistFragment;
+import com.example.cardviewgridviewsample.tabs.AddPersonActivity;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -56,13 +57,15 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_giftlist));
 
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-//            }
-//        });
+                Intent intent = new Intent(DrawerActivity.this, AddPersonActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

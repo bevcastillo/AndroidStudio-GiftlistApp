@@ -29,7 +29,7 @@ public class TabStatFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    TextView txtTotalBudget;
+    TextView txtTotalBudget, txtGiftQty;
     double personBudget;
     String totalBudgetStr, personBudgetStr;
 
@@ -47,6 +47,7 @@ public class TabStatFragment extends Fragment {
 
         ///
         txtTotalBudget = (TextView) view.findViewById(R.id.total_budget);
+        txtGiftQty = (TextView) view.findViewById(R.id.gift_count);
 
         //
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -85,15 +86,21 @@ public class TabStatFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()){
                                     double mTotal = 0;
+                                    int mTotQuantity = 0;
                                     for (DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
                                         String personListKey = dataSnapshot2.getKey();
                                         Person person = dataSnapshot2.getValue(Person.class);
                                         double number = person.getPerson_budget();
+                                        int quantity = person.getPerson_gift_qty();
                                         mTotal = mTotal+number;
+                                        mTotQuantity = mTotQuantity+quantity;
 
                                     }
                                     databaseReference.child("users/"+userKey+"/user_budget").setValue(mTotal);
                                     txtTotalBudget.setText(String.valueOf(mTotal));
+
+                                    databaseReference.child("users/"+userKey+"/person_gift_qty").setValue(mTotQuantity);
+                                    txtGiftQty.setText(String.valueOf(mTotQuantity));
 
                                 }
                             }

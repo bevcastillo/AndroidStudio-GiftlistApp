@@ -6,25 +6,47 @@
     android:layout_margin="5dp">
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/gift_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Watch"
-            android:textSize="18dp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-        <TextView
-            android:id="@+id/gift_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0.00"
-            android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/gift_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Watch"
+                android:textSize="18dp"/>
+
+            <TextView
+                android:id="@+id/gift_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/packed_checkBox"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"/>
+
+        <CheckBox
+            android:id="@+id/bought_checkBox"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"/>
 
     </LinearLayout>
+
 
 </android.support.v7.widget.CardView>

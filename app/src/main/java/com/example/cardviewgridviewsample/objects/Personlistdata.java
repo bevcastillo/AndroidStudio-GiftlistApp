@@ -3,7 +3,7 @@ package com.example.cardviewgridviewsample.objects;
 public class Personlistdata {
     String person_name, person_image;
     double person_budget;
-    int person_total_qty;
+    int person_gift_qty;
 
     public String getPerson_name() {
         return person_name;
@@ -29,11 +29,11 @@ public class Personlistdata {
         this.person_budget = person_budget;
     }
 
-    public int getPerson_total_qty() {
-        return person_total_qty;
+    public int getPerson_gift_qty() {
+        return person_gift_qty;
     }
 
-    public void setPerson_total_qty(int person_total_qty) {
-        this.person_total_qty = person_total_qty;
+    public void setPerson_gift_qty(int person_gift_qty) {
+        this.person_gift_qty = person_gift_qty;
     }
 }

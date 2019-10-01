@@ -1,21 +1,38 @@
 package com.example.cardviewgridviewsample.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.cardviewgridviewsample.R;
 import com.example.cardviewgridviewsample.objects.Giftlistdata;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
 public class ViewGiftsAdapter extends RecyclerView.Adapter<ViewGiftsAdapter.ViewHolder> {
     List<Giftlistdata> list;
     Context context;
+
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+
+    //
+    String wrapped, bought;
+
+    CheckBox chkWrapped, chkBought;
 
     public ViewGiftsAdapter(List<Giftlistdata> list, Context context) {
         this.list = list;
@@ -25,9 +42,189 @@ public class ViewGiftsAdapter extends RecyclerView.Adapter<ViewGiftsAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view;
+        final View view;
         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_card_person_giftlist, viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(view);
+
+        //
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("wishes_data");
+
+        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String giftName = list.get(viewHolder.getAdapterPosition()).getGift_name();
+
+                //
+                viewHolder.wrappedChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                        if (isChecked){
+                            wrapped = "checked";
+                            viewHolder.wrappedChecked.setChecked(true);
+                        }else {
+                            wrapped = "unchecked";
+                            viewHolder.wrappedChecked.setChecked(false);
+                        }
+
+                        SharedPreferences userPreference = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE);
+                        final String username = (userPreference.getString("uname",""));
+
+                        //
+                        SharedPreferences personNamePref = context.getSharedPreferences("personPref", Context.MODE_PRIVATE);
+                        final String personName = (personNamePref.getString("person_name",""));
+
+                        databaseReference.child("users").orderByChild("user_username")
+                                .equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()){
+                                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                                        final String usersKey = dataSnapshot1.getKey();
+
+                                        databaseReference.child("users/"+usersKey+"/personlist")
+                                                .orderByChild("person_name")
+                                                .equalTo(personName)
+                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        if (dataSnapshot.exists()){
+                                                            for (DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
+                                                                final String personlistKey = dataSnapshot2.getKey();
+
+                                                                databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift")
+                                                                        .orderByChild("gift_name")
+                                                                        .equalTo(giftName)
+                                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                            @Override
+                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                if (dataSnapshot.exists()){
+                                                                                    for (DataSnapshot dataSnapshot3: dataSnapshot.getChildren()){
+                                                                                        String persongiftKey = dataSnapshot3.getKey();
+
+                                                                                        databaseReference.child("users/"+usersKey
+                                                                                                +"/personlist/"+personlistKey
+                                                                                                +"/person_gift/"+persongiftKey)
+                                                                                                .child("/gift_wrap_status").setValue(wrapped);
+                                                                                    }
+                                                                                }
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+                    }
+                });
+
+                viewHolder.boughtChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked){
+                            bought = "checked";
+                            viewHolder.boughtChecked.setChecked(true);
+                        }else {
+                            bought = "unchecked";
+                            viewHolder.boughtChecked.setChecked(false);
+                        }
+
+
+                        SharedPreferences userPreference = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE);
+                        final String username = (userPreference.getString("uname",""));
+
+                        //
+                        SharedPreferences personNamePref = context.getSharedPreferences("personPref", Context.MODE_PRIVATE);
+                        final String personName = (personNamePref.getString("person_name",""));
+
+                        databaseReference.child("users").orderByChild("user_username")
+                                .equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()){
+                                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                                        final String usersKey = dataSnapshot1.getKey();
+
+                                        databaseReference.child("users/"+usersKey+"/personlist")
+                                                .orderByChild("person_name")
+                                                .equalTo(personName)
+                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        if (dataSnapshot.exists()){
+                                                            for (DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
+                                                                final String personlistKey = dataSnapshot2.getKey();
+
+                                                                databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift")
+                                                                        .orderByChild("gift_name")
+                                                                        .equalTo(giftName)
+                                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                            @Override
+                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                if (dataSnapshot.exists()){
+                                                                                    for (DataSnapshot dataSnapshot3: dataSnapshot.getChildren()){
+                                                                                        String persongiftKey = dataSnapshot3.getKey();
+
+                                                                                        databaseReference.child("users/"+usersKey
+                                                                                                +"/personlist/"+personlistKey
+                                                                                                +"/person_gift/"+persongiftKey)
+                                                                                                .child("/gift_wrap_status").setValue(wrapped);
+                                                                                    }
+                                                                                }
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
+
 
         return viewHolder;
     }
@@ -48,12 +245,17 @@ public class ViewGiftsAdapter extends RecyclerView.Adapter<ViewGiftsAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder{
         TextView gift_name, gift_price;
+        CheckBox wrappedChecked, boughtChecked;
+        LinearLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             gift_name = (TextView) itemView.findViewById(R.id.gift_name);
             gift_price = (TextView) itemView.findViewById(R.id.gift_price);
+            wrappedChecked = (CheckBox) itemView.findViewById(R.id.packed_checkBox);
+            boughtChecked = (CheckBox) itemView.findViewById(R.id.bought_checkBox);
+            layout = (LinearLayout) itemView.findViewById(R.id.layout);
         }
     }
 }

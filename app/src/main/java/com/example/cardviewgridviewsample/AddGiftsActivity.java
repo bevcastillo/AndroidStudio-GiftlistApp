@@ -76,6 +76,8 @@ public class AddGiftsActivity extends AppCompatActivity implements View.OnClickL
     private void addGift(final String gift_name, String gift_where_to_buy, String gift_note, double gift_price) {
         final Gift gift = new Gift(gift_name, gift_where_to_buy, gift_note, gift_price);
 
+        gift.setGift_wrap_status("not checked");
+        gift.setGift_bought_status("not checked");
 
         SharedPreferences userPreference = getSharedPreferences("UserPref", MODE_PRIVATE);
         final String username = (userPreference.getString("uname",""));
@@ -100,13 +102,17 @@ public class AddGiftsActivity extends AppCompatActivity implements View.OnClickL
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.exists()){
+                                            int giftCount = 0;
                                             for (DataSnapshot dataSnapshot21: dataSnapshot.getChildren()){
                                                 String personlistKey = dataSnapshot21.getKey();
                                                 Person person = dataSnapshot21.getValue(Person.class);
+                                                int quantity = person.getPerson_gift_qty();
 
                                                 databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift")
                                                         .child(GiftId).setValue(gift);
-                                                databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/gift_count").setValue(gift);
+                                                databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift_qty")
+                                                        .setValue(quantity+1);
+                                                //
                                             }
                                         }
                                     }

@@ -99,11 +99,20 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wrapped    Bought"
+            android:gravity="right"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/gifts_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="30dp"/>
 
     </FrameLayout>
 
