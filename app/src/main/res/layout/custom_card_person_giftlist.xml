@@ -23,14 +23,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Watch"
-                android:textSize="18dp"/>
+                android:textSize="18dp"
+                android:textColor="#000000"/>
 
             <TextView
                 android:id="@+id/gift_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0.00"
-                android:textSize="18dp"/>
+                android:textSize="16dp"/>
 
         </LinearLayout>
 

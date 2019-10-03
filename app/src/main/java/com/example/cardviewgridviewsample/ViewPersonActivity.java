@@ -69,10 +69,18 @@ public class ViewPersonActivity extends AppCompatActivity implements View.OnClic
     protected void onStart() {
         super.onStart();
 
-        SharedPreferences personNamePref = getSharedPreferences("personPref", Context.MODE_PRIVATE);
-        final String personName = (personNamePref.getString("person_name",""));
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle!=null){
+            personNameStr = bundle.getString("selected_person");
+        }
 
-        txtPersonName.setText(personName);
+        txtPersonName.setText(personNameStr);
+
+        //saving to the Shared Preference
+        SharedPreferences personNamePref = getSharedPreferences("PersonPref", MODE_PRIVATE);
+        SharedPreferences.Editor personNameEditor = personNamePref.edit();
+        personNameEditor.putString("shared_person_name", personNameStr);
+        personNameEditor.commit(); ///
 
         displayPersonDetails();
     }
@@ -96,7 +104,7 @@ public class ViewPersonActivity extends AppCompatActivity implements View.OnClic
 
                                 databaseReference.child("users/"+usersKey+"/personlist")
                                         .orderByChild("person_name")
-                                        .equalTo(personName)
+                                        .equalTo(personNameStr)
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -112,14 +120,19 @@ public class ViewPersonActivity extends AppCompatActivity implements View.OnClic
                                                                 for (DataSnapshot dataSnapshot3: dataSnapshot.getChildren()){
                                                                     Gift gift = dataSnapshot3.getValue(Gift.class);
                                                                     Giftlistdata listdata = new Giftlistdata();
+                                                                    String boughtStatus = gift.getGift_bought_status();
+                                                                    String wrapStatus = gift.getGift_wrap_status();
                                                                     String giftName = gift.getGift_name();
                                                                     double giftPrice = gift.getGift_price();
                                                                     String giftNote = gift.getGift_note();
                                                                     String giftWhere = gift.getGift_where_to_buy();
+                                                                    //setters
                                                                     listdata.setGift_name(giftName);
                                                                     listdata.setGift_price(giftPrice);
                                                                     listdata.setGift_note(giftNote);
                                                                     listdata.setGift_where_to_buy(giftWhere);
+                                                                    listdata.setGift_bought_status(boughtStatus);
+                                                                    listdata.setGift_wrap_status(wrapStatus);
                                                                     list.add(listdata);
                                                                 }
                                                                 ViewGiftsAdapter adapter = new ViewGiftsAdapter(list, getApplicationContext());
@@ -176,6 +189,7 @@ public class ViewPersonActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.add_gift:
                 Intent intent1 = new Intent(ViewPersonActivity.this, AddGiftsActivity.class);
+                intent1.putExtra("mPerson_name", personNameStr);
                 startActivity(intent1);
                 break;
             case R.id.backbutton_image:

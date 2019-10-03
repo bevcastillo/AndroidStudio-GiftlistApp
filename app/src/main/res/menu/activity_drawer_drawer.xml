@@ -7,21 +7,20 @@
         <item
             android:id="@+id/nav_giftlist"
             android:icon="@drawable/ic_gift"
-            android:title="My Giftlist" />
+            android:title="My Giftlist"
+            android:iconTint="@color/colorPomonaGreen"  />
 
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Settings" />
+            android:title="Account"
+            android:iconTint="@color/colorPomonaGreen"/>
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout"
+            android:iconTint="@color/colorPomonaGreen"/>
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_logout"
-                android:title="Logout" />
-
-        </menu>
-    </item>
 
 </menu>

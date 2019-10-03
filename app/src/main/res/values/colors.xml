@@ -8,4 +8,8 @@
     <color name="colorBlack">#FF826E</color>
     <color name="colorGreen">#6B9777</color>
     <color name="colorRed">#E06661</color>
+
+    <color name="colorCinnabar">#EA4630</color>
+    <color name="colorFirebrick">#BB2528</color>
+    <color name="colorPomonaGreen">#165B33</color>
 </resources>

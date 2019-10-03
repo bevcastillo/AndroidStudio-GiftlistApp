@@ -109,9 +109,11 @@ public class TabListFragment extends Fragment {
                                     String person_name = person.getPerson_name();
                                     String person_image = person.getPerson_image();
                                     double person_budget = person.getPerson_budget();
+                                    int person_gift_qty = person.getPerson_gift_qty();
                                     listdata.setPerson_name(person_name);
                                     listdata.setPerson_budget(person_budget);
                                     listdata.setPerson_image(person_image);
+                                    listdata.setPerson_gift_qty(person_gift_qty);
                                     list.add(listdata);
                                 }
                                 PersonlistAdapter adapter = new PersonlistAdapter(getContext(), list);

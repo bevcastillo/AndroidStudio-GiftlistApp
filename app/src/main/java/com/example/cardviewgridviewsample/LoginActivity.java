@@ -62,9 +62,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.btnLogin:
-                loginUser();
+                if (validateFields()){
+                    loginUser();
+                }
                 break;
         }
+    }
+
+    public boolean validateFields(){
+        String mUsername = editTextUsername.getText().toString();
+        String mPassword = editTextPassword.getText().toString();
+        boolean ok = true;
+
+        if (mUsername.isEmpty()){
+            usernameLayout.setError("Fields cannot be empty");
+            ok = false;
+        }
+
+        if (mPassword.isEmpty()){
+            passwordLayout.setError("Fields cannot be empty");
+            ok = false;
+        }
+
+        return ok;
     }
 
     public void loginUser(){

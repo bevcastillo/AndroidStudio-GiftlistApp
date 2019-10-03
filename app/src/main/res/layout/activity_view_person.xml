@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ViewPersonActivity">
+    tools:context=".ViewPersonActivity"
+    android:background="@mipmap/ic_add_bg">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/giftlist_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorRed"
+        android:background="@color/colorFirebrick"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -45,7 +46,8 @@
                 android:layout_weight="1"
                 android:src="@drawable/ic_edit_user"
                 android:layout_gravity="center"
-                android:tint="@color/colorWhite"/>
+                android:tint="@color/colorWhite"
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/add_gift"

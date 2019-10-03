@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".tabs.AddPersonActivity"
+    tools:context=".EditPersonActivity"
     android:background="@mipmap/ic_add_bg">
 
     <android.support.v7.widget.Toolbar
@@ -34,12 +34,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:paddingLeft="10dp"
-                android:text="Add a Person"
+                android:text="Edit a Person"
                 android:textColor="@color/colorWhite"
                 style="@style/TextAppearance.AppCompat.Title"/>
 
             <ImageView
-                android:id="@+id/imageViewAdd"
+                android:id="@+id/updateBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -50,10 +50,6 @@
 
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -75,7 +71,7 @@
             android:paddingBottom="20dp">
 
             <ImageView
-                android:id="@+id/person_image"
+                android:id="@+id/edit_person_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/ic_image"/>
@@ -91,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Person name"
-                    android:id="@+id/person_name" />
+                    android:id="@+id/edit_person_name" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -105,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Budget"
-                    android:id="@+id/person_budget"
+                    android:id="@+id/edit_person_budget"
                     android:inputType="numberDecimal"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -113,6 +109,5 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-    </ScrollView>
 
 </LinearLayout>

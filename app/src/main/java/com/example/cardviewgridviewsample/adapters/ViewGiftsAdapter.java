@@ -3,6 +3,7 @@ package com.example.cardviewgridviewsample.adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,181 +51,177 @@ public class ViewGiftsAdapter extends RecyclerView.Adapter<ViewGiftsAdapter.View
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("wishes_data");
 
-        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.wrappedChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                final String giftName = list.get(viewHolder.getAdapterPosition()).getGift_name();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                final String name = list.get(viewHolder.getAdapterPosition()).getGift_name();
 
-                //
-                viewHolder.wrappedChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                if (isChecked){
+                    wrapped = "checked";
+                }else {
+                    wrapped = "unchecked";
+//                            viewHolder.wrappedChecked.setChecked(false);
+                }
+
+                SharedPreferences userPreference = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE);
+                final String username = (userPreference.getString("uname",""));
+
+                SharedPreferences personNamePref = context.getSharedPreferences("PersonPref", Context.MODE_PRIVATE);
+                final String personName = (personNamePref.getString("shared_person_name",""));
+
+
+                databaseReference.child("users").orderByChild("user_username")
+                        .equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                                final String usersKey = dataSnapshot1.getKey();
 
-                        if (isChecked){
-                            wrapped = "checked";
-                            viewHolder.wrappedChecked.setChecked(true);
-                        }else {
-                            wrapped = "unchecked";
-                            viewHolder.wrappedChecked.setChecked(false);
+                                databaseReference.child("users/"+usersKey+"/personlist")
+                                        .orderByChild("person_name")
+                                        .equalTo(personName)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()){
+                                                    for (DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
+                                                        final String personlistKey = dataSnapshot2.getKey();
+
+                                                        databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift")
+                                                                .orderByChild("gift_name")
+                                                                .equalTo(name)
+                                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                        if (dataSnapshot.exists()){
+                                                                            for (DataSnapshot dataSnapshot3: dataSnapshot.getChildren()){
+                                                                                String persongiftKey = dataSnapshot3.getKey();
+
+                                                                                databaseReference.child("users/"+usersKey
+                                                                                        +"/personlist/"+personlistKey
+                                                                                        +"/person_gift/"+persongiftKey)
+                                                                                        .child("/gift_wrap_status").setValue(wrapped);
+                                                                            }
+                                                                            Snackbar.make(view, "Selection is saved", Snackbar.LENGTH_LONG)
+                                                                                    .setAction("Action", null).show();
+                                                                        }
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                            }
                         }
+                    }
 
-                        SharedPreferences userPreference = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE);
-                        final String username = (userPreference.getString("uname",""));
-
-                        //
-                        SharedPreferences personNamePref = context.getSharedPreferences("personPref", Context.MODE_PRIVATE);
-                        final String personName = (personNamePref.getString("person_name",""));
-
-                        databaseReference.child("users").orderByChild("user_username")
-                                .equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()){
-                                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                                        final String usersKey = dataSnapshot1.getKey();
-
-                                        databaseReference.child("users/"+usersKey+"/personlist")
-                                                .orderByChild("person_name")
-                                                .equalTo(personName)
-                                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                        if (dataSnapshot.exists()){
-                                                            for (DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
-                                                                final String personlistKey = dataSnapshot2.getKey();
-
-                                                                databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift")
-                                                                        .orderByChild("gift_name")
-                                                                        .equalTo(giftName)
-                                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                            @Override
-                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                                if (dataSnapshot.exists()){
-                                                                                    for (DataSnapshot dataSnapshot3: dataSnapshot.getChildren()){
-                                                                                        String persongiftKey = dataSnapshot3.getKey();
-
-                                                                                        databaseReference.child("users/"+usersKey
-                                                                                                +"/personlist/"+personlistKey
-                                                                                                +"/person_gift/"+persongiftKey)
-                                                                                                .child("/gift_wrap_status").setValue(wrapped);
-                                                                                    }
-                                                                                }
-                                                                            }
-
-                                                                            @Override
-                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                                            }
-                                                                        });
-                                                            }
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                    }
-                                                });
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
 
-                viewHolder.boughtChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+            }
+        });
+
+        viewHolder.boughtChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                final String name = list.get(viewHolder.getAdapterPosition()).getGift_name();
+                if (isChecked){
+                    bought = "checked";
+                    viewHolder.boughtChecked.setChecked(true);
+                }else {
+                    bought = "unchecked";
+                    viewHolder.boughtChecked.setChecked(false);
+                }
+
+
+                SharedPreferences userPreference = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE);
+                final String username = (userPreference.getString("uname",""));
+
+                //
+                SharedPreferences personNamePref = context.getSharedPreferences("personPref", Context.MODE_PRIVATE);
+                final String personName = (personNamePref.getString("person_name",""));
+
+                databaseReference.child("users").orderByChild("user_username")
+                        .equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked){
-                            bought = "checked";
-                            viewHolder.boughtChecked.setChecked(true);
-                        }else {
-                            bought = "unchecked";
-                            viewHolder.boughtChecked.setChecked(false);
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                                final String usersKey = dataSnapshot1.getKey();
+
+                                databaseReference.child("users/"+usersKey+"/personlist")
+                                        .orderByChild("person_name")
+                                        .equalTo(personName)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()){
+                                                    for (DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
+                                                        final String personlistKey = dataSnapshot2.getKey();
+
+                                                        databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift")
+                                                                .orderByChild("gift_name")
+                                                                .equalTo(name)
+                                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                        if (dataSnapshot.exists()){
+                                                                            for (DataSnapshot dataSnapshot3: dataSnapshot.getChildren()){
+                                                                                String persongiftKey = dataSnapshot3.getKey();
+
+                                                                                databaseReference.child("users/"+usersKey
+                                                                                        +"/personlist/"+personlistKey
+                                                                                        +"/person_gift/"+persongiftKey)
+                                                                                        .child("/gift_wrap_status").setValue(wrapped);
+                                                                            }
+                                                                            Snackbar.make(view,"Selection is saved", Snackbar.LENGTH_LONG)
+                                                                                    .setAction("Action", null).show();
+                                                                        }
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                            }
                         }
+                    }
 
-
-                        SharedPreferences userPreference = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE);
-                        final String username = (userPreference.getString("uname",""));
-
-                        //
-                        SharedPreferences personNamePref = context.getSharedPreferences("personPref", Context.MODE_PRIVATE);
-                        final String personName = (personNamePref.getString("person_name",""));
-
-                        databaseReference.child("users").orderByChild("user_username")
-                                .equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()){
-                                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                                        final String usersKey = dataSnapshot1.getKey();
-
-                                        databaseReference.child("users/"+usersKey+"/personlist")
-                                                .orderByChild("person_name")
-                                                .equalTo(personName)
-                                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                        if (dataSnapshot.exists()){
-                                                            for (DataSnapshot dataSnapshot2: dataSnapshot.getChildren()){
-                                                                final String personlistKey = dataSnapshot2.getKey();
-
-                                                                databaseReference.child("users/"+usersKey+"/personlist/"+personlistKey+"/person_gift")
-                                                                        .orderByChild("gift_name")
-                                                                        .equalTo(giftName)
-                                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                            @Override
-                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                                if (dataSnapshot.exists()){
-                                                                                    for (DataSnapshot dataSnapshot3: dataSnapshot.getChildren()){
-                                                                                        String persongiftKey = dataSnapshot3.getKey();
-
-                                                                                        databaseReference.child("users/"+usersKey
-                                                                                                +"/personlist/"+personlistKey
-                                                                                                +"/person_gift/"+persongiftKey)
-                                                                                                .child("/gift_wrap_status").setValue(wrapped);
-                                                                                    }
-                                                                                }
-                                                                            }
-
-                                                                            @Override
-                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                                            }
-                                                                        });
-                                                            }
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                    }
-                                                });
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
 
             }
         });
-
 
         return viewHolder;
     }
@@ -235,6 +232,47 @@ public class ViewGiftsAdapter extends RecyclerView.Adapter<ViewGiftsAdapter.View
 
         viewHolder.gift_name.setText(data.getGift_name());
         viewHolder.gift_price.setText("₱ "+data.getGift_price());
+
+        String status = data.getGift_bought_status();
+        String wrapStat = data.getGift_wrap_status();
+
+        viewHolder.boughtChecked.setChecked(false);
+        viewHolder.wrappedChecked.setChecked(false);
+
+        if (data.getGift_bought_status().equals("checked")){
+            viewHolder.boughtChecked.setChecked(true);
+
+        }
+
+        if (data.getGift_bought_status().equals("unchecked")){
+            viewHolder.boughtChecked.setChecked(false);
+        }
+
+        if (data.getGift_wrap_status().equals("checked")){
+            viewHolder.wrappedChecked.setChecked(true);
+        }
+
+        if (data.getGift_wrap_status().equals("unchecked")){
+            viewHolder.wrappedChecked.setChecked(false);
+        }
+
+
+//        if (data.getGift_bought_status() == "checked"){
+//            viewHolder.boughtChecked.setChecked(true);
+//        }
+//
+//
+//        if (data.getGift_bought_status() == "unchecked"){
+//            viewHolder.boughtChecked.setChecked(false);
+//        }
+//
+//        if (data.getGift_wrap_status() == "checked"){
+//            viewHolder.wrappedChecked.setChecked(true);
+//        }
+//
+//        if (data.getGift_wrap_status() == "unchecked"){
+//            viewHolder.wrappedChecked.setChecked(false);
+//        }
 
     }
 

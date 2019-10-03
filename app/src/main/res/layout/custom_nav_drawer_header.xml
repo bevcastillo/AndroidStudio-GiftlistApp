@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:paddingLeft="30dp"
+    android:gravity="center|left"
+    android:background="@mipmap/ic_header_bg">
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_santa_claus"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/user_fullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beverly May Castillo"
+            android:textSize="18dp"
+            android:textColor="@color/colorFirebrick"/>
+
+        <TextView
+            android:id="@+id/user_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="bcastillo"
+            android:textSize="14dp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
