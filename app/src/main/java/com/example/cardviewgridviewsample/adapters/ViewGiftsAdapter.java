@@ -60,7 +60,6 @@ public class ViewGiftsAdapter extends RecyclerView.Adapter<ViewGiftsAdapter.View
                     wrapped = "checked";
                 }else {
                     wrapped = "unchecked";
-//                            viewHolder.wrappedChecked.setChecked(false);
                 }
 
                 SharedPreferences userPreference = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE);
@@ -255,24 +254,6 @@ public class ViewGiftsAdapter extends RecyclerView.Adapter<ViewGiftsAdapter.View
         if (data.getGift_wrap_status().equals("unchecked")){
             viewHolder.wrappedChecked.setChecked(false);
         }
-
-
-//        if (data.getGift_bought_status() == "checked"){
-//            viewHolder.boughtChecked.setChecked(true);
-//        }
-//
-//
-//        if (data.getGift_bought_status() == "unchecked"){
-//            viewHolder.boughtChecked.setChecked(false);
-//        }
-//
-//        if (data.getGift_wrap_status() == "checked"){
-//            viewHolder.wrappedChecked.setChecked(true);
-//        }
-//
-//        if (data.getGift_wrap_status() == "unchecked"){
-//            viewHolder.wrappedChecked.setChecked(false);
-//        }
 
     }
 

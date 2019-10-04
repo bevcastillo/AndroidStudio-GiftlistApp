@@ -1,9 +1,11 @@
 package com.example.cardviewgridviewsample.tabs;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -46,6 +48,7 @@ public class TabListFragment extends Fragment {
     ProgressBar progressBar;
     SwipeRefreshLayout pullToRefresh;
 
+    FloatingActionButton addFButton;
 
     public TabListFragment() {
         // Required empty public constructor
@@ -63,6 +66,15 @@ public class TabListFragment extends Fragment {
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         noItemLayout = (LinearLayout) view.findViewById(R.id.layout_noitem_found);
         pullToRefresh = (SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
+
+        addFButton = (FloatingActionButton) view.findViewById(R.id.fab);
+        addFButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddPersonActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //listeners
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

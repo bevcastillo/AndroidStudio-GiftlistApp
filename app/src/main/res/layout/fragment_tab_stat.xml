@@ -11,7 +11,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
         android:background="@color/colorWhite"
@@ -20,27 +20,132 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:text="Days until Christmas"
-                android:textSize="22dp"
-                android:gravity="left|center"
-                android:textColor="@color/colorPomonaGreen"
-                android:paddingLeft="10dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="There are only"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textColor="#000000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/countdown_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/colorPomonaGreen"
+                        android:textSize="22dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="days"
+                        android:textAllCaps="true"
+                        android:padding="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/countdown_hours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/colorPomonaGreen"
+                        android:textSize="22dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hours"
+                        android:textAllCaps="true"
+                        android:padding="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/countdown_minutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/colorPomonaGreen"
+                        android:textSize="22dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="minutes"
+                        android:textAllCaps="true"
+                        android:padding="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/countdown_seconds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/colorFirebrick"
+                        android:textSize="22dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="seconds"
+                        android:textAllCaps="true"
+                        android:padding="3dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="83"
-                android:textSize="22dp"
-                android:gravity="right|center"
-                android:paddingRight="10dp"
-                android:textColor="@color/colorFirebrick"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="until Christmas!"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:textColor="#000000"/>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
@@ -71,6 +176,7 @@
                 android:paddingLeft="10dp"/>
 
             <TextView
+                android:id="@+id/total_spent_yooo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -187,6 +293,7 @@
                 android:textColor="@color/colorPomonaGreen"/>
 
             <TextView
+                android:id="@+id/left_to_buy"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -225,6 +332,7 @@
                 android:textColor="@color/colorPomonaGreen"/>
 
             <TextView
+                android:id="@+id/left_to_wrap"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".tabs.TabListFragment"
     android:background="@mipmap/ic_add_bg">
     
@@ -57,6 +58,16 @@
             android:layout_marginTop="20dp"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            android:tint="@color/colorWhite"
+            android:backgroundTint="@color/colorPomonaGreen"/>
 
     </FrameLayout>
 
