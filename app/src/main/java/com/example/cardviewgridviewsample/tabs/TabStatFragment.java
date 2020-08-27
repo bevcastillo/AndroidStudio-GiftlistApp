@@ -85,7 +85,7 @@ public class TabStatFragment extends Fragment {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
         format.setLenient(false);
 
-        String endTime = "25.12.2019, 00:00:00";
+        String endTime = "25.12.2020, 00:00:00";
 
         Date endDate;
         try {
